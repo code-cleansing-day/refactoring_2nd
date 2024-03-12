@@ -1,6 +1,7 @@
 {
   "name": "refactoring_2nd",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "index.js",
   "scripts": {
