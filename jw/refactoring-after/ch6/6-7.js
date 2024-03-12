@@ -1,6 +1,7 @@
-let a = height * width;
+const area = height * width;
 
-const cpyNm = '애플';
+const copyName = "애플";
 
-let tpHd = '제목없음';
-let result = `<h1>${tpHd}</h1>`;
+const headingTitle = "제목없음";
+const $heading = `<h1>${headingTitle}</h1>`;
+// const headingDom = `<h1>${headingTitle}</h1>`;

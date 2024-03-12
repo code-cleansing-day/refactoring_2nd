@@ -1,7 +1,7 @@
 export default class Book {
   #reservations;
-  constructor() {
-    this.#reservations = [];
+  constructor(reservations = []) {
+    this.#reservations = reservations;
   }
 
   addReservation(customer) {
