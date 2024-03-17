@@ -1,10 +1,18 @@
-import { acquireReading, baseRate } from './6-9.js';
+import { getReading, calcBaseRate } from "./6-9.js";
 
-const aReading = acquireReading();
-const base = baseRate(aReading.month, aReading.year) * aReading.quantity;
+const aReading = getReading();
+const base = calcBaseRate(aReading.month, aReading.year) * aReading.quantity;
 
 function taxThreshold(year) {
   return 0.1;
 }
 
-export const taxableCharge = Math.max(0, base - taxThreshold(aReading.year));
+function getMaxTaxCharge(maxTax) {
+  return Math.max(0, maxTax);
+}
+
+export const taxableCharge = getMaxTaxCharge(
+  base - taxThreshold(aReading.year)
+);
+
+console.log(taxableCharge, "taxableCharge");

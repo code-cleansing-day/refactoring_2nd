@@ -1,6 +1,11 @@
-import { acquireReading, baseRate } from './6-9.js';
+import { getReading, calcBaseRate, Reading } from "./6-9.js";
 
-const aReading = acquireReading();
+const aReading = getReading();
 
-const baseCharge = baseRate(aReading.month, aReading.year) * aReading.quantity;
+const baseCharge =
+  calcBaseRate(aReading.month, aReading.year) * aReading.quantity;
 console.log(baseCharge);
+
+const reading2 = new Reading(reading);
+
+console.log(reading2.calcBaseCharge());
