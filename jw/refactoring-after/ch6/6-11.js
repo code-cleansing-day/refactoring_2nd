@@ -95,12 +95,12 @@ class Order {
   }
 
   getPrice() {
-    const basePrice = this.#product.calcBasePrice(this.#quantity);
-    const discount = this.#product.calcDiscountPrice(this.#quantity);
-    const shippingPerCase = this.#shippingMethod.getShippingCase(basePrice);
-    const shippingCost = this.#quantity * shippingPerCase;
-    const price = basePrice - discount + shippingCost;
-    return price;
+    const 기본가 = this.#product.calcBasePrice(this.#quantity);
+    const 할인가 = this.#product.calcDiscountPrice(this.#quantity);
+    const 배송비 =
+      this.#quantity * this.#shippingMethod.getShippingCase(기본가);
+
+    return 기본가 - 할인가 + 배송비;
   }
 }
 

@@ -1,7 +1,5 @@
 import fs from "node:fs";
 
-const clientInputFileName = process.argv[2];
-
 function throwClientFileNameError(fileName) {
   if (!fileName) {
     throw new Error("파일 이름을 입력하세요");
@@ -21,7 +19,7 @@ function readRawFileAsParsed(fileName) {
 
   try {
     file = fs.readFileSync(originModulePath, "utf8");
-    return JSON.parse(rawData);
+    return JSON.parse(file);
   } catch (error) {
     if (error.code === "ENOENT") {
       // We're probably dealing with a virtualised file system where
@@ -37,15 +35,21 @@ function readRawFileAsParsed(fileName) {
   }
 }
 
-throwClientFileNameError(clientInputFileName);
-checkIsFileExist(clientInputFileName);
+function getOrderSize(orders) {
+  return process.argv.includes("-r")
+    ? orders.filter((order) => order.status === "ready").length
+    : orders.length;
+}
 
-const orders = readRawFileAsParsed(clientInputFileName);
-console.log(orders, "orders");
+function run(args) {
+  const clientInputFileName = args[2];
 
-// console.log(rawData, "rawData");
-// if (process.argv.includes("-r")) {
-//   console.log(orders.filter((order) => order.status === "ready").length);
-// } else {
-//   console.log(orders.length);
-// }
+  throwClientFileNameError(clientInputFileName);
+  checkIsFileExist(clientInputFileName);
+  const orders = readRawFileAsParsed(clientInputFileName);
+  const length = getOrderSize(orders);
+
+  console.log(length);
+}
+
+run(process.argv);
