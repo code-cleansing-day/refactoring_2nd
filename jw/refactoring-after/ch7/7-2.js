@@ -1,3 +1,6 @@
+/**
+ * **컬렉션 캡슐화**
+ */
 export class Person {
   #name;
   #courses;
@@ -11,11 +14,20 @@ export class Person {
   }
 
   get courses() {
-    return this.#courses;
+    return [...this.#courses];
   }
 
-  set courses(courses) {
-    this.#courses = courses;
+  addCourses(course) {
+    this.#courses.push(course);
+  }
+
+  removeCourses(course, runIfAbsent) {
+    const result = this.#courses.filter((c) => c.name !== course.name);
+    if (result.length === this.#courses.length) {
+      runIfAbsent();
+    }
+
+    this.#courses = result;
   }
 }
 
@@ -36,6 +48,14 @@ export class Course {
   }
 }
 
-const ellie = new Person('엘리');
-ellie.courses.push(new Course('리팩토링', true));
+const ellie = new Person("엘리");
+
+ellie.addCourses(new Course("리팩토링1", true));
+ellie.addCourses(new Course("리팩토링2", true));
+ellie.addCourses(new Course("리팩토링3", true));
+
+ellie.removeCourses(new Course("리팩토링2"), () => {
+  console.log("해당 강의가 없습니다.");
+});
+
 console.log(ellie.courses.length);
