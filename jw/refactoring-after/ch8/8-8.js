@@ -1,5 +1,5 @@
 export function acquireData(input) {
-  const lines = input.split('\n');
+  const lines = input.split("\n");
   let firstLine = true;
   const result = [];
   for (const line of lines) {
@@ -7,9 +7,9 @@ export function acquireData(input) {
       firstLine = false;
       continue;
     }
-    if (line.trim() === '') continue;
-    const record = line.split(',');
-    if (record[1].trim() === 'India') {
+    if (line.trim() === "") continue;
+    const record = line.split(",");
+    if (record[1].trim() === "India") {
       result.push({ city: record[0].trim(), phone: record[2].trim() });
     }
   }
@@ -24,3 +24,27 @@ Porto Alegre, Brazil, +55 51 3079 3550\n
 Chennai, India, +91 44 660 44766`;
 const result = acquireData(input);
 console.log(result);
+
+export function acquireData2(input) {
+  const lines = input.split("\n");
+  const withoutFirstLine = lines.slice(1);
+  const withoutEmptyLine = withoutFirstLine.filter(
+    (line) => line.trim() !== ""
+  );
+  const filterIndia = withoutEmptyLine.filter((line) => {
+    const record = line.split(",");
+    return record[1].trim() === "India";
+  });
+  const cityAndPhone = filterIndia.map((line) => {
+    const record = line.split(",");
+
+    return {
+      city: record[0].trim(),
+      phone: record[2].trim(),
+    };
+  });
+
+  return cityAndPhone;
+}
+
+console.log(acquireData2(input));
