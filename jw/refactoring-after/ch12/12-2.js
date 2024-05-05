@@ -1,9 +1,11 @@
-class Employee {}
-
-class Salesperson extends Employee {
+class Employee {
   #name;
+
+  get name() {
+    return this.#name;
+  }
 }
 
-class Engineer extends Employee {
-  #name;
-}
+class Salesperson extends Employee {}
+
+class Engineer extends Employee {}

@@ -1,10 +1,10 @@
 function createBird(bird) {
   switch (bird.type) {
-    case '유럽 제비':
+    case "유럽 제비":
       return new EuropeanSwallow(bird);
-    case '아프리카 제비':
+    case "아프리카 제비":
       return new AfricanSwallow(bird);
-    case '노르웨이 파랑 앵무':
+    case "노르웨이 파랑 앵무":
       return new NorwegianBlueParrot(bird);
     default:
       return new Bird(bird);
@@ -22,7 +22,7 @@ class Bird {
   }
 
   get plumage() {
-    return this._plumage || '보통이다';
+    return this._plumage || "보통이다";
   }
 
   get airSpeedVelocity() {
@@ -58,9 +58,9 @@ class NorwegianBlueParrot extends Bird {
 
   get plumage() {
     if (this._voltage > 100) {
-      return '그을렸다';
+      return "그을렸다";
     } else {
-      return this._plumage || '예쁘다';
+      return this._plumage || "예쁘다";
     }
   }
 

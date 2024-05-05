@@ -1,11 +1,12 @@
-class Department {
-  get totalAnnualCost() {}
+class Part {
   get name() {}
+  get annualCost() {}
+}
+
+class Department extends Part {
   get headCount() {}
 }
 
-class Employee {
-  get annualCost() {}
-  get name() {}
+class Employee extends Part {
   get id() {}
 }

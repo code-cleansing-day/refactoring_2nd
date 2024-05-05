@@ -5,7 +5,7 @@ class Booking {
   }
 
   get hasTalkback() {
-    return this._show.hasOwnProperty('talkback') && !this.isPeakDay;
+    return this._show.hasOwnProperty("talkback") && !this.isPeakDay;
   }
 
   get basePrice() {
@@ -17,26 +17,30 @@ class Booking {
 
     return result;
   }
+
+  get isPeakDay() {}
 }
 
-class PremiumBooking extends Booking {
-  constructor(show, date, extras) {
-    super(show, date);
+class PremiumBooking {
+  #booking;
+
+  constructor(booking, extras) {
+    this.#booking = booking;
     this._extras = extras;
   }
 
   get hasTalkback() {
-    return this._show.hasOwnProperty('talkback');
+    return this.#booking._show.hasOwnProperty("talkback");
   }
 
   get basePrice() {
-    return Math.round(super.basePrice + this._extras.PremiumFee);
+    return Math.round(this.#booking.basePrice + this._extras.PremiumFee);
   }
 
   get hasDinner() {
-    return this._extras.hasOwnProperty('dinner') && !this.isPeakDay;
+    return this._extras.hasOwnProperty("dinner") && !this.isPeakDay;
   }
 }
 
 const booking = new Booking(show, date);
-const premiumBooking = new PremiumBooking(show, date, extras);
+const premiumBooking = new PremiumBooking(extras);
