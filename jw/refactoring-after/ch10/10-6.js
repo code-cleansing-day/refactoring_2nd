@@ -1,7 +1,7 @@
 import { strict as assert } from "node:assert";
 
 /**
- * assertion 추가
+ * assert 추가
  * - assert 함수를 사용하여 입력값이 유효한지 검사
  * - 처음보는 케이스여서 신기
  * - 안정성 검토후 사용해도 좋을듯

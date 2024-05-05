@@ -11,18 +11,18 @@ function totalOutstandingAndSendBill() {
 // 예제 2
 export function alertForMiscreant(people, alarm) {
   for (const p of people) {
-    if (p === 'Don') {
+    if (p === "Don") {
       setOffAlarms(alarm, p);
-      return 'Don';
+      return "Don";
     }
-    if (p === 'John') {
+    if (p === "John") {
       setOffAlarms(alarm, p);
-      return 'John';
+      return "John";
     }
   }
-  return '';
+  return "";
 }
 
 function setOffAlarms(alarm, p) {
-  alarm.setOff('Found Miscreant ' + p);
+  alarm.setOff("Found Miscreant " + p);
 }
