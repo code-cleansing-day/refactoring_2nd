@@ -1,24 +1,56 @@
 class Booking {
+  #show;
+  #date;
+
+  #premiumDelegate;
+  #privateBasePrice;
+
   constructor(show, date) {
-    this._show = show;
-    this._date = date;
+    this.#show = show;
+    this.#date = date;
   }
 
   get hasTalkback() {
-    return this._show.hasOwnProperty("talkback") && !this.isPeakDay;
+    return this.#premiumDelegate
+      ? this.#premiumDelegate.hasTalkback
+      : this.#show.hasOwnProperty("talkback") && !this.isPeakDay;
   }
 
   get basePrice() {
-    let result = this._show.price;
-
-    if (this.isPeakDay) {
-      result += Math.round(result * 0.15);
-    }
-
-    return result;
+    return this.#premiumDelegate
+      ? this.#premiumDelegate.extendedBasePrice(result)
+      : this.#privateBasePrice;
   }
 
-  get isPeakDay() {}
+  get hasDinner() {
+    return this.#premiumDelegate ? this.#premiumDelegate.hasDinner : undefined;
+  }
+
+  #bePremium(extras) {
+    this.#premiumDelegate = new PremiumBookingDelegate(this, extras);
+  }
+
+  static createBooking(show, date) {
+    return new Booking(show, date);
+  }
+
+  static createPremiumBooking(show, date, extras) {
+    const result = new Booking(show, date, extras);
+    result.#bePremium(extras);
+  }
+}
+
+class PremiumBookingDelegate {
+  #host;
+  #extras;
+  constructor(host, extras) {
+    this.#host = host;
+    this.#extras = extras;
+  }
+
+  get hasTalkback() {
+    return this.#host._show.hasOwnProperty("talkback");
+  }
 }
 
 class PremiumBooking {

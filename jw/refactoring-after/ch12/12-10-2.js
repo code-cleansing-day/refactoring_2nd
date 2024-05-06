@@ -1,20 +1,29 @@
-function createBird(bird) {
-  switch (bird.type) {
-    case "유럽 제비":
-      return new EuropeanSwallow(bird);
-    case "아프리카 제비":
-      return new AfricanSwallow(bird);
-    case "노르웨이 파랑 앵무":
-      return new NorwegianBlueParrot(bird);
-    default:
-      return new Bird(bird);
-  }
-}
+/**
+ * 상속과 컴포지션 활용 고민해보기
+ * - 상속을 사용하면 코드 재사용성이 높아지지만, 클래스 간의 관계가 복잡해질 수 있다.
+ * - 컴포지션을 사용하면 클래스 간의 관계를 단순하게 유지할 수 있지만, 코드 재사용성이 떨어질 수 있다.
+ *
+ * 둘다 장단점이 있고, 어느 것이 더 좋은 방법인지는 상황에 따라 다르다.
+ */
+
+// function createBird(bird) {
+//   switch (bird.type) {
+//     case "유럽 제비":
+//       return new EuropeanSwallow(bird, this);
+//     case "아프리카 제비":
+//       return new AfricanSwallow(bird, this);
+//     case "노르웨이 파랑 앵무":
+//       return new NorwegianBlueParrot(bird, this);
+//     default:
+//       return new Bird(bird, this);
+//   }
+// }
 
 class Bird {
   constructor(data) {
     this._name = data.name;
     this._plumage = data.plumage;
+    this._specialPlumage = this.selectSpecialPlumage(data);
   }
 
   get name() {
@@ -22,11 +31,24 @@ class Bird {
   }
 
   get plumage() {
-    return this._plumage || "보통이다";
+    return this._specialPlumage.plumage;
   }
 
   get airSpeedVelocity() {
-    return null;
+    return this._specialPlumage.airSpeedVelocity;
+  }
+
+  selectSpecialPlumage(data) {
+    switch (data.type) {
+      case "유럽 제비":
+        return new EuropeanSwallow(data, this);
+      case "아프리카 제비":
+        return new AfricanSwallow(data, this);
+      case "노르웨이 파랑 앵무":
+        return new NorwegianBlueParrot(data, this);
+      default:
+        return new Bird(data, this);
+    }
   }
 }
 

@@ -19,9 +19,17 @@ class CatalogItem {
 }
 
 class Scroll extends CatalogItem {
-  constructor(id, title, tags, dataLastCleaned) {
-    super(id, title, tags);
+  constructor(id, dataLastCleaned, catalogItem) {
+    this._id = id;
     this._lastCleaned = dataLastCleaned;
+  }
+
+  get id() {
+    return this._id;
+  }
+
+  get title() {
+    return this._catalogItem.title;
   }
 
   needsCleaning(targetDate) {
@@ -34,3 +42,9 @@ class Scroll extends CatalogItem {
     return this._lastCleaned.until(targetDate, ChronoUnit.DAYS);
   }
 }
+
+const scroll = new Scroll(
+  0,
+  LocalDate.now(),
+  new CatalogItem(0, "title", ["revered"])
+);
