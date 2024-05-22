@@ -27,11 +27,7 @@ class Employee {
   }
 }
 
-class Engineer extends Employee {
-  get type() {
-    return "engineer";
-  }
-}
+// Factory Method
 
 class Manager extends Employee {
   get type() {

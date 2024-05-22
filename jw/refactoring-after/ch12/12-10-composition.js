@@ -32,3 +32,17 @@ const printers = [
 ];
 
 printers.forEach((p) => p.print());
+
+// 학습지
+// - 학습지 필기 모듈
+// - 채점 모듈
+
+// 상속보다는 위임을 사용하자
+
+// storageService
+// - localStorage
+// - sessionStorage
+
+// 학습지, 교재 필터
+
+// 역할

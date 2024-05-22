@@ -18,7 +18,6 @@
 //       return new Bird(bird, this);
 //   }
 // }
-
 class Bird {
   constructor(data) {
     this._name = data.name;

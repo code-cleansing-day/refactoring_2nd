@@ -4,6 +4,7 @@ interface PrinterHeader {
 
 export class Printer {
   private printerHeader: PrinterHeader;
+
   constructor(printerHeader?: PrinterHeader) {
     this.printerHeader = printerHeader
       ? printerHeader
