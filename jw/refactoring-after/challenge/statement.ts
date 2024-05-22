@@ -1,20 +1,25 @@
 import { Invoice } from "./Invoice";
-import { ComedyPlay, ExceptionalPlay, PlayT, TragedyPlay } from "./play/Play";
+import { ComedyPlay, ExceptionalPlay, PlayT, TragedyPlay } from "./Play";
 
 /**
  * **내가 생각하는 개선 포인트**
  * - [x] totalAmount 흐름 파악이 어려움 + 불변성 보장 안됨
  * - statement(계산서) 함수가 너무 많은 일을 하고 있음
- * - for문을 map으로 변경
+ * - [x] for문을 map으로 변경
  *  - for문 안에서 하는 일: thisAmount, volumeCredits 계산
- *  - 각각 일을 나눠서 할 수 있지 않을까?
- * - play 다형성 개선
- * - perf 약어가 이해하기 어려움
- * - format 함수를 따로 빼서 사용
+ *  - [x] 각각 일을 나눠서 할 수 있지 않을까?
+ *    -> thisAmount 계산: play.calculateAmount(performance)
+ *    -> volumeCredits 계산: play.calculateVolumeCredits(performance)
+ * - [x] play 다형성 개선
+ *    -> playFactory 함수를 만들어서 play 생성
+ * - [x] perf 약어가 이해하기 어려움
+ *   -> performance로 변경
+ * - [x] format 함수를 따로 빼서 사용
+ *   -> private로 캡슐화
  */
-export class Statement {
-  invoice: Invoice;
-  plays: Record<string, PlayT>;
+export class StatementManager {
+  private invoice: Invoice;
+  private plays: Record<string, PlayT>;
 
   constructor(invoice: Invoice, plays: Record<string, PlayT>) {
     this.invoice = invoice;
@@ -35,34 +40,26 @@ export class Statement {
   }
 
   private getVolumeCredits() {
-    let volumeCredits = 0;
-
     const volumeCreditList = this.invoice.performances.map((performance) => {
       const play = this.playFactory(this.plays[performance.playID]);
-      if (play.type === "comedy") {
-        return Math.floor(performance.audience / 5);
-      }
-      return Math.max(performance.audience - 30, 0);
+
+      return (
+        Math.max(performance.audience - 30, 0) +
+        (play.type === "comedy" ? Math.floor(performance.audience / 5) : 0)
+      );
     });
 
-    for (let performance of this.invoice.performances) {
-      const play = this.playFactory(this.plays[performance.playID]);
-
-      // 포인트를 적립한다.
-      volumeCredits += Math.max(performance.audience - 30, 0);
-      // 희극 관객 5명마다 추가 포인트를 제공한다.
-      if ("comedy" === play.type)
-        volumeCredits += Math.floor(performance.audience / 5);
-    }
-
-    return volumeCredits;
+    return volumeCreditList.reduce(
+      (prevVolumeCredits, volumeCredits) => prevVolumeCredits + volumeCredits,
+      0
+    );
   }
 
   // 청구 내역을 출력한다.
   getStatement() {
     let result = `청구 내역 (고객명: ${this.invoice.customer})\n`;
 
-    for (let performance of this.invoice.performances) {
+    for (const performance of this.invoice.performances) {
       const play = this.playFactory(this.plays[performance.playID]);
       const thisAmount = play.calculateAmount(performance);
 

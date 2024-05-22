@@ -1,4 +1,4 @@
-import { Performance } from "../Performance";
+import { Performance } from "./Performance";
 
 export type PlayT = {
   name: string;

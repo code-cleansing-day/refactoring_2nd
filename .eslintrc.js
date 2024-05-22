@@ -10,5 +10,11 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module",
   },
-  rules: {},
+  rules: {
+    quotes: 0,
+    "comma-dangle": 0,
+    semi: 0,
+    camelcase: 0,
+    "space-before-function-paren": 0,
+  },
 };
